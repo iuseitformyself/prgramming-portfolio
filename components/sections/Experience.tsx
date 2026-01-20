@@ -12,7 +12,7 @@ const experiences = [
         type: "work",
         title: "Senior Full Stack Developer",
         company: "Freelance / Remote",
-        period: "2022 - Present",
+        period: "2022 - Present (2026)",
         description: "Leading development of high-performance web applications for clients worldwide. Specializing in Next.js, React, and modern JavaScript ecosystems."
     },
     {
@@ -31,12 +31,13 @@ const experiences = [
     },
     {
         type: "education",
-        title: "Computer Science",
+        title: "Computer Science (Ongoing Study)",
         company: "University",
-        period: "2015 - 2019",
-        description: "Bachelor's degree in Computer Science with focus on software engineering and web technologies."
+        period: "2024 - Present (2026)",
+        description: "Continuing studies in computer science, software engineering, and modern web technologies alongside professional work."
     },
 ]
+
 
 export default function Experience() {
     const container = useRef(null)

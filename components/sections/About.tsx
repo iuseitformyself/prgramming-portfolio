@@ -64,10 +64,10 @@ export default function About() {
                         <p>
                             My expertise spans from crafting pixel-perfect frontends with
                             <span className="text-accent-cyan"> React & Next.js </span>
-                            to building robust backends with Node.js. I specialize in creating
+                            to building robust backends with Node.js & Python. I specialize in creating
                             <span className="text-accent-cyan"> high-performance</span>,
                             <span className="text-accent-cyan"> SEO-optimized</span>, and
-                            <span className="text-accent-cyan"> visually stunning</span> web applications.
+                            <span className="text-accent-cyan"> visually stunning</span> web and mobile applications.
                         </p>
                         <p>
                             When I'm not coding, I'm exploring new technologies, contributing to open source,
