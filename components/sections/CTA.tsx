@@ -51,10 +51,10 @@ export default function CTA() {
                         <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                     </button>
                     <a
-                        href="mailto:hello@taha.dev"
+                        href="mailto:iuseitformyself@gmail.com"
                         className="px-8 py-4 bg-white/10 text-white font-semibold rounded-full hover:bg-white/20 transition-all duration-300 backdrop-blur-sm"
                     >
-                        hello@taha.dev
+                        iuseitformyself@gmail.com
                     </a>
                 </div>
             </div>
