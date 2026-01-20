@@ -1,166 +1,160 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Section } from '../ui/Section'
-import { ExternalLink } from 'lucide-react'
+import { Section, SectionHeader } from '../ui/Section'
 import Image from 'next/image'
-
-gsap.registerPlugin(ScrollTrigger)
+import { ExternalLink } from 'lucide-react'
 
 const projects = [
     {
-        title: "Chat App Template",
-        desc: "A powerful Nuxt.js chat application template inspired by modern messaging platforms.",
-        tech: ["Nuxt.js", "Vue", "Tailwind CSS"],
+        title: "Chat Application",
+        description: "A real-time messaging platform with instant delivery, read receipts, typing indicators, and a modern responsive UI.",
+        image: "/project-chat.png",
+        tech: ["Vue.js", "Node.js", "MongoDB", "Socket.io", "Tailwind CSS"],
         link: "https://chat-template.nuxt.dev/",
-        image: "/project-chat.png"
+        color: "from-purple-500/30 to-pink-500/30"
     },
     {
-        title: "Modernize Admin",
-        desc: "A comprehensive Next.js admin dashboard template with data visualization.",
-        tech: ["Next.js", "MUI", "React"],
+        title: "Modernize Dashboard",
+        description: "Comprehensive admin dashboard template featuring data visualization, dark mode, responsive tables, and analytics charts.",
+        image: "/project-dashboard.png",
+        tech: ["Next.js", "React", "TypeScript", "PostgreSQL", "REST API"],
         link: "https://modernize-nextjs-free.vercel.app/",
-        image: "/project-dashboard.png"
+        color: "from-cyan-500/30 to-blue-500/30"
     },
     {
         title: "E-Commerce Store",
-        desc: "A fully functional e-commerce storefront built with modern web technologies.",
-        tech: ["Next.js", "Vercel", "Tailwind"],
+        description: "Full-featured online store with cart functionality, product listings, checkout flow, and optimized for SEO and performance.",
+        image: "/project-ecommerce.png",
+        tech: ["Next.js", "React", "Node.js", "MongoDB", "Stripe"],
         link: "https://ecommerce-store-eight-blush.vercel.app/",
-        image: "/project-ecommerce.png"
+        color: "from-orange-500/30 to-red-500/30"
     },
     {
         title: "Crypto Tracker",
-        desc: "Real-time cryptocurrency tracking dashboard for monitoring market trends.",
-        tech: ["Next.js", "API", "Chart.js"],
+        description: "Live cryptocurrency market tracker with real-time price updates, historical charting, and portfolio management features.",
+        image: "/project-crypto.png",
+        tech: ["React", "Node.js", "Express", "REST API", "Chart.js"],
         link: "https://crypto-currency-tracker-zeta.vercel.app/",
-        image: "/project-crypto.png"
+        color: "from-green-500/30 to-teal-500/30"
     },
     {
         title: "PNG Demo Tool",
-        desc: "Optimized utility application for image processing and demonstration.",
-        tech: ["React", "Image Handling"],
+        description: "Optimized utility application for image processing, compression, and format conversion with drag-and-drop interface.",
+        image: "/project-generic.png",
+        tech: ["React", "Python", "FastAPI", "Node.js"],
         link: "https://png-demo.vercel.app/",
-        image: "/project-generic.png"
+        color: "from-indigo-500/30 to-purple-500/30"
     },
     {
         title: "E-Commerce Admin",
-        desc: "Robust backend administration panel for e-commerce businesses.",
-        tech: ["Next.js", "TypeScript", "Dashboard"],
+        description: "Robust backend administration panel for e-commerce businesses with inventory management, order tracking, and analytics.",
+        image: "/project-dashboard.png",
+        tech: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "Prisma"],
         link: "https://ecommerce-admin-one-drab.vercel.app/",
-        image: "/project-dashboard.png" // Reusing dashboard image for consistency
+        color: "from-blue-500/30 to-cyan-500/30"
     },
     {
         title: "Haram Homes",
-        desc: "Real estate platform specializing in property listings and agent contacts.",
-        tech: ["Web Tech", "UI/UX"],
+        description: "Real estate platform specializing in property listings, agent contacts, and property search with SEO optimization.",
+        image: "/project-real-estate.png",
+        tech: ["React", "Next.js", "Node.js", "MySQL", "SEO"],
         link: "https://haram.homes/",
-        image: "/project-real-estate.png"
+        color: "from-amber-500/30 to-orange-500/30"
     },
     {
         title: "Rediscover Network",
-        desc: "Social networking platform focused on connecting people via profiles and feeds.",
-        tech: ["Network Architecture", "Web"],
+        description: "Social networking platform focused on connecting people via profiles, feeds, and real-time messaging features.",
+        image: "/project-social.png",
+        tech: ["React", "Node.js", "Express", "MongoDB", "Socket.io"],
         link: "https://rediscover.network/",
-        image: "/project-social.png"
+        color: "from-pink-500/30 to-rose-500/30"
     },
     {
         title: "CCH Assistant",
-        desc: "Intelligent assistant application designed to help users with specific tasks.",
-        tech: ["AI", "Vercel", "Bot"],
+        description: "Intelligent AI-powered assistant application designed to help users with queries, tasks, and workflow automation.",
+        image: "/project-ai.png",
+        tech: ["React", "Python", "Django", "OpenAI API", "PostgreSQL"],
         link: "https://cchassistant.vercel.app/",
-        image: "/project-ai.png"
+        color: "from-violet-500/30 to-purple-500/30"
     },
     {
         title: "NoFPG",
-        desc: "Engaging web application demonstrating interactive capabilities.",
-        tech: ["Netlify", "Interactive"],
+        description: "Engaging interactive web application with modern design patterns and smooth user experience.",
+        image: "/project-generic.png",
+        tech: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
         link: "https://nofpg.netlify.app/",
-        image: "/project-generic.png"
-    }
+        color: "from-teal-500/30 to-green-500/30"
+    },
+    {
+        title: "Portfolio Inspiration",
+        description: "Design reference - A beautifully crafted developer portfolio showcasing smooth animations and modern aesthetics.",
+        image: "/project-portfolio.png",
+        tech: ["React", "Gatsby", "Styled Components", "GraphQL"],
+        link: "https://v4.brittanychiang.com/",
+        color: "from-emerald-500/30 to-cyan-500/30"
+    },
 ]
 
 export default function Projects() {
-    const container = useRef(null)
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            const cards = gsap.utils.toArray('.project-card')
-
-            cards.forEach((card: any) => {
-                gsap.from(card, {
-                    scrollTrigger: {
-                        trigger: card,
-                        start: "top bottom-=50",
-                        toggleActions: "play none none reverse",
-                    },
-                    y: 30,
-                    opacity: 0,
-                    duration: 0.6,
-                    ease: "power2.out"
-                })
-            })
-        }, container)
-
-        return () => ctx.revert()
-    }, [])
-
     return (
-        <Section id="projects" className="py-12">
-            <div ref={container} className="relative">
-                <div className="flex items-center gap-4 mb-10">
-                    <span className="h-[1px] w-12 bg-green"></span>
-                    <span className="text-green font-mono text-lg">Featured Projects</span>
-                </div>
+        <Section id="projects" accent="orange">
+            <SectionHeader
+                label="Featured Projects"
+                title="Selected Works"
+                description="A showcase of my recent projects built with MERN, MEAN stack and modern technologies."
+            />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 group/grid">
-                    {projects.map((project, i) => (
-                        <div
-                            key={i}
-                            className="project-card relative group rounded-xl overflow-hidden bg-navy-800 border border-white/10 hover:border-green/50 transition-all duration-500 h-full flex flex-col hover:-translate-y-2 shadow-lg"
-                        >
-                            {/* Image Section */}
-                            <div className="relative w-full h-48 overflow-hidden">
+            <div className="space-y-24">
+                {projects.map((project, i) => (
+                    <div
+                        key={i}
+                        className={`flex flex-col ${i % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 lg:gap-16 items-center`}
+                    >
+                        {/* Image */}
+                        <div className="w-full lg:w-3/5 relative group">
+                            <div className={`absolute -inset-4 bg-gradient-to-br ${project.color} rounded-3xl blur-2xl opacity-50 group-hover:opacity-80 transition-opacity duration-500`} />
+                            <div className="relative h-[280px] md:h-[350px] rounded-2xl overflow-hidden border border-white/10">
                                 <Image
                                     src={project.image}
                                     alt={project.title}
                                     fill
-                                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                    sizes="(max-width: 768px) 100vw, 60vw"
+                                    className="object-cover transition-transform duration-700 group-hover:scale-105"
                                 />
-                                <div className="absolute inset-0 bg-navy-900/60 group-hover:bg-navy-900/20 transition-colors duration-300" />
-                            </div>
-
-                            {/* Content Section */}
-                            <div className="p-6 flex flex-col flex-grow relative z-10">
-                                <div className="flex justify-between items-start mb-4">
-                                    <h3 className="text-slate-100 font-bold text-xl group-hover:text-green transition-colors">
-                                        <a href={project.link} target="_blank" rel="noopener noreferrer">{project.title}</a>
-                                    </h3>
-                                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-green transition-colors">
-                                        <ExternalLink size={20} />
-                                    </a>
-                                </div>
-
-                                <p className="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
-                                    {project.desc}
-                                </p>
-
-                                <ul className="flex flex-wrap gap-2 text-xs font-mono text-green/80 mt-auto pt-4 border-t border-white/5">
-                                    {project.tech.map((t, idx) => (
-                                        <li key={idx} className="bg-navy-900/50 px-2 py-1 rounded border border-white/5">{t}</li>
-                                    ))}
-                                </ul>
                             </div>
                         </div>
-                    ))}
-                </div>
 
-                <div className="mt-20 text-center">
-                    <a href="https://v4.brittanychiang.com/" target="_blank" rel="noopener noreferrer" className="text-slate-500 font-mono text-xs hover:text-green transition-colors opacity-70">
-                        Design Inspiration: Brittany Chiang
-                    </a>
-                </div>
+                        {/* Content */}
+                        <div className="w-full lg:w-2/5">
+                            <span className="text-accent-orange font-mono text-sm mb-4 block">
+                                {String(i + 1).padStart(2, '0')}.
+                            </span>
+                            <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                                {project.title}
+                            </h3>
+                            <p className="text-gray-400 text-lg leading-relaxed mb-6">
+                                {project.description}
+                            </p>
+
+                            <div className="flex flex-wrap gap-2 mb-8">
+                                {project.tech.map((t, j) => (
+                                    <span key={j} className="px-4 py-2 glass text-sm text-gray-300 rounded-full">
+                                        {t}
+                                    </span>
+                                ))}
+                            </div>
+
+                            <a
+                                href={project.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 text-white hover:text-accent-orange transition-colors font-medium group/link"
+                            >
+                                View Project
+                                <ExternalLink size={18} className="group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
+                            </a>
+                        </div>
+                    </div>
+                ))}
             </div>
         </Section>
     )

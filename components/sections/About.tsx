@@ -2,36 +2,43 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Button } from '../ui/Button'
-import { Section } from '../ui/Section'
-import Image from 'next/image'
+import { Section, SectionHeader } from '../ui/Section'
+import { Code, Zap, Users } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const stats = [
+    { value: "5+", label: "Years Experience", icon: <Zap size={24} /> },
+    { value: "50+", label: "Projects Delivered", icon: <Code size={24} /> },
+    { value: "30+", label: "Happy Clients", icon: <Users size={24} /> },
+]
 
 export default function About() {
     const container = useRef(null)
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            gsap.from(".about-text", {
+            gsap.from(".about-content", {
                 scrollTrigger: {
                     trigger: container.current,
                     start: "top 80%",
-                    toggleActions: "play none none reverse"
                 },
-                y: 50,
+                y: 60,
                 opacity: 0,
                 duration: 1,
-                stagger: 0.2
+                ease: "power3.out"
             })
 
-            // Continuous floating animation for the image
-            gsap.to(".about-image-container", {
-                y: -15,
-                duration: 2,
-                repeat: -1,
-                yoyo: true,
-                ease: "sine.inOut"
+            gsap.from(".about-stat", {
+                scrollTrigger: {
+                    trigger: ".about-stats",
+                    start: "top 85%",
+                },
+                y: 40,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: "power3.out"
             })
         }, container)
 
@@ -39,37 +46,49 @@ export default function About() {
     }, [])
 
     return (
-        <Section id="about" className="justify-center">
-            <div ref={container} className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <div className="relative group about-text mx-auto bg-transparent perspective-1000 order-1">
-                    <div className="relative z-10 w-full max-w-[400px] aspect-square rounded-2xl overflow-hidden border-2 border-green/10 group-hover:border-green/40 transition-all duration-500 bg-navy-800/50 shadow-2xl backdrop-blur-sm about-image-container">
-                        <Image
-                            src="/about-coding.png"
-                            alt="Coding Illustration"
-                            fill
-                            className="object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-navy-900/10 mix-blend-overlay group-hover:bg-transparent transition-all duration-300"></div>
+        <Section ref={container} id="about" accent="cyan" dark>
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+                {/* Content */}
+                <div className="about-content">
+                    <SectionHeader
+                        label="About Me"
+                        title="Building the Future, One Line at a Time"
+                    />
+
+                    <div className="space-y-6 text-gray-300 text-lg leading-relaxed">
+                        <p>
+                            I'm <span className="text-white font-semibold">Muhammad Taha</span>, a passionate
+                            Full Stack Developer with over 5 years of experience creating digital solutions
+                            that make an impact.
+                        </p>
+                        <p>
+                            My expertise spans from crafting pixel-perfect frontends with
+                            <span className="text-accent-cyan"> React & Next.js </span>
+                            to building robust backends with Node.js. I specialize in creating
+                            <span className="text-accent-cyan"> high-performance</span>,
+                            <span className="text-accent-cyan"> SEO-optimized</span>, and
+                            <span className="text-accent-cyan"> visually stunning</span> web applications.
+                        </p>
+                        <p>
+                            When I'm not coding, I'm exploring new technologies, contributing to open source,
+                            or helping businesses transform their digital presence.
+                        </p>
                     </div>
-                    {/* Floating Elements Animation */}
-                    <div className="absolute -top-6 -right-6 w-20 h-20 bg-green/10 rounded-full blur-xl animate-pulse"></div>
-                    <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl animate-pulse delay-700"></div>
                 </div>
 
-                <div className="order-2">
-                    <div className="flex items-center gap-4 mb-8 about-text">
-                        <span className="h-[1px] w-12 bg-green"></span>
-                        <span className="text-green font-mono text-lg">About Me</span>
-                    </div>
-                    <h2 className="text-3xl md:text-4xl font-bold text-slate-100 mb-6 about-text">
-                        Passionate about creating scalable, performant web applications.
-                    </h2>
-                    <p className="text-slate-400 text-lg mb-6 leading-relaxed about-text">
-                        I am deeply passionate about designing and engineering scalable, high-performance web and mobile applications that deliver real value. My name is Muhammad Taha, and my journey into development began with hands-on experimentation—customizing Tumblr themes and discovering the creative potential of HTML and CSS.
-                    </p>
-                    <p className="text-slate-400 text-lg leading-relaxed about-text">
-                      Today, I specialize in developing modern user interfaces with Next.js and React.js, cross-platform mobile applications using React Native, and robust back-end systems with Node.js. I prioritize performance, clean architecture, and user-centered design to <span className="text-green">deliver reliable</span> and <span className="text-green">impactful solutions.</span>.
-                    </p>
+                {/* Stats */}
+                <div className="about-stats grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-6">
+                    {stats.map((stat, i) => (
+                        <div key={i} className="about-stat glass p-8 rounded-2xl hover:bg-white/5 transition-colors group">
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="p-3 rounded-xl bg-accent-cyan/10 text-accent-cyan group-hover:bg-accent-cyan group-hover:text-carbon transition-colors">
+                                    {stat.icon}
+                                </div>
+                            </div>
+                            <div className="text-4xl md:text-5xl font-bold text-white mb-2">{stat.value}</div>
+                            <div className="text-gray-400 font-medium">{stat.label}</div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </Section>

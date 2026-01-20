@@ -2,24 +2,32 @@ import Navbar from "@/components/ui/Navbar";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import Skills from "@/components/sections/Skills";
+import Services from "@/components/sections/Services";
 import Projects from "@/components/sections/Projects";
-import WhyChooseMe from "@/components/sections/WhyChooseMe";
-import Services from "@/components/sections/Services"; // Added
-import Testimonials from "@/components/sections/Testimonials"; // Added
+import Experience from "@/components/sections/Experience";
+import Process from "@/components/sections/Process";
+import Testimonials from "@/components/sections/Testimonials";
+import Tools from "@/components/sections/Tools";
+import CTA from "@/components/sections/CTA";
 import Contact from "@/components/sections/Contact";
+import Footer from "@/components/sections/Footer";
 
 export default function Home() {
   return (
-    <main className="bg-navy-900 min-h-screen selection:bg-green selection:text-navy-900 overflow-hidden">
+    <main className="bg-carbon min-h-screen selection:bg-accent-purple selection:text-white overflow-hidden">
       <Navbar />
       <Hero />
       <About />
-      <WhyChooseMe />
+      <Skills />
       <Services />
       <Projects />
+      <Experience />
+      <Process />
       <Testimonials />
-      <Skills />
+      <Tools />
+      <CTA />
       <Contact />
+      <Footer />
     </main>
   );
 }

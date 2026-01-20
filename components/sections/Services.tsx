@@ -1,96 +1,83 @@
 'use client'
-import { useEffect, useRef } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Section } from '../ui/Section'
-import { Code, Rocket, Layout, Smartphone, Search, PenTool } from 'lucide-react'
-
-gsap.registerPlugin(ScrollTrigger)
+import { Section, SectionHeader } from '../ui/Section'
+import { Code, Rocket, Smartphone, Search, PenTool, Database } from 'lucide-react'
 
 const services = [
     {
-        icon: <Layout size={32} />,
-        title: "Custom Website Development",
-        desc: "I build bespoke websites tailored to your brand. No cookie-cutter templates—just unique, high-performing designs."
+        icon: <Code size={32} />,
+        title: "Web Development",
+        description: "Custom websites and web applications built with modern frameworks like Next.js and React for optimal performance.",
+        features: ["Responsive Design", "SEO Optimized", "Fast Loading"]
     },
     {
         icon: <Rocket size={32} />,
-        title: "Web Performance Optimization",
-        desc: "Slow sites lose customers. I optimize your existing site to load instantly, improving SEO and user retention."
+        title: "Performance Optimization",
+        description: "Speed up your existing website with advanced optimization techniques for better user experience and SEO.",
+        features: ["Core Web Vitals", "Image Optimization", "Code Splitting"]
     },
     {
         icon: <Smartphone size={32} />,
         title: "Mobile-First Design",
-        desc: "Over 60% of traffic is mobile. I ensure your site looks and works perfectly on every screen size."
+        description: "Pixel-perfect responsive designs that work flawlessly across all devices and screen sizes.",
+        features: ["Touch Friendly", "Cross-Browser", "Accessible"]
     },
     {
-        icon: <Code size={32} />,
-        title: "SaaS Application Development",
-        desc: "Need a complex web app? I architect scalable SaaS solutions with secure authentication and robust databases."
+        icon: <Database size={32} />,
+        title: "Full Stack Solutions",
+        description: "End-to-end development from database design to frontend implementation with scalable architecture.",
+        features: ["REST APIs", "Database Design", "Authentication"]
     },
     {
         icon: <Search size={32} />,
-        title: "Technical SEO integration",
-        desc: "Get found on Google. I implement Technical SEO best practices to help you rank higher than your competitors."
+        title: "Technical SEO",
+        description: "Implement best practices for search engine optimization to improve your site's visibility and ranking.",
+        features: ["Schema Markup", "Meta Tags", "Site Speed"]
     },
     {
         icon: <PenTool size={32} />,
-        title: "UI/UX Interaction Design",
-        desc: "I create engaging animations and micro-interactions that delight users and keep them on your site longer."
-    }
+        title: "UI/UX Design",
+        description: "Beautiful, intuitive interfaces with smooth animations that engage users and enhance conversions.",
+        features: ["Animations", "Micro-interactions", "User Flow"]
+    },
 ]
 
 export default function Services() {
-    const container = useRef(null)
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.from(".service-card", {
-                scrollTrigger: {
-                    trigger: container.current,
-                    start: "top 85%",
-                },
-                y: 50,
-                opacity: 0,
-                duration: 0.6,
-                stagger: 0.1,
-                ease: "power2.out"
-            })
-        }, container)
-
-        return () => ctx.revert()
-    }, [])
-
     return (
-        <Section id="services" className="py-24">
-            <div ref={container}>
-                <div className="flex items-center gap-4 mb-16 justify-center">
-                    <span className="h-[1px] w-12 bg-green"></span>
-                    <span className="text-green font-mono text-lg">My Services</span>
-                    <span className="h-[1px] w-12 bg-green"></span>
-                </div>
+        <Section id="services" accent="blue" dark>
+            <SectionHeader
+                label="Services"
+                title="What I Can Do For You"
+                description="Comprehensive web development services tailored to your business needs."
+                center
+            />
 
-                <h2 className="text-3xl md:text-5xl font-bold text-slate-100 mb-6 text-center">
-                    Everything you need to grow online.
-                </h2>
-                <p className="text-slate-400 text-center max-w-2xl mx-auto mb-20 text-lg">
-                    I don't just write code; I build digital assets that drive business results.
-                </p>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {services.map((item, index) => (
-                        <div
-                            key={index}
-                            className="service-card p-8 bg-navy-800 rounded-lg border border-navy-700 hover:border-green hover:-translate-y-2 transition-all duration-300 group hover:shadow-xl hover:shadow-green/10"
-                        >
-                            <div className="w-14 h-14 bg-navy-700 rounded-lg flex items-center justify-center text-green mb-6 group-hover:bg-green group-hover:text-navy-900 transition-colors duration-300">
-                                {item.icon}
-                            </div>
-                            <h3 className="text-slate-100 font-bold text-xl mb-4 group-hover:text-green transition-colors">{item.title}</h3>
-                            <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {services.map((service, i) => (
+                    <div
+                        key={i}
+                        className="glass p-8 rounded-2xl hover:bg-white/5 transition-all duration-300 group hover:-translate-y-2"
+                    >
+                        <div className="w-14 h-14 rounded-xl bg-accent-blue/10 flex items-center justify-center text-accent-blue mb-6 group-hover:bg-accent-blue group-hover:text-carbon transition-colors">
+                            {service.icon}
                         </div>
-                    ))}
-                </div>
+
+                        <h3 className="text-white text-xl font-bold mb-4 group-hover:text-accent-blue transition-colors">
+                            {service.title}
+                        </h3>
+
+                        <p className="text-gray-400 mb-6 leading-relaxed">
+                            {service.description}
+                        </p>
+
+                        <div className="flex flex-wrap gap-2">
+                            {service.features.map((feature, j) => (
+                                <span key={j} className="px-3 py-1 text-xs bg-white/5 text-gray-300 rounded-full">
+                                    {feature}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                ))}
             </div>
         </Section>
     )

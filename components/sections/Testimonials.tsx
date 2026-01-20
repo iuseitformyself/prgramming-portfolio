@@ -1,81 +1,69 @@
 'use client'
-import { useEffect, useRef } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Section } from '../ui/Section'
-import { Quote } from 'lucide-react'
-
-gsap.registerPlugin(ScrollTrigger)
+import { Section, SectionHeader } from '../ui/Section'
+import { Quote, Star } from 'lucide-react'
 
 const testimonials = [
     {
-        text: "Taha is an exceptional developer. He took our outdated website and transformed it into a modern, high-converting masterpiece. Our leads increased by 40% in the first month!",
+        text: "Taha exceeded all expectations. He transformed our outdated website into a modern, high-converting platform. Our leads increased by 40% in the first month!",
         author: "Sarah Jenkins",
-        role: "CEO, TechFlow Solutions"
+        role: "CEO, TechFlow Solutions",
+        rating: 5
     },
     {
-        text: "Working with Taha was seamless. He understood our vision immediately and delivered ahead of schedule. The animations he added gave our brand the premium feel we were looking for.",
+        text: "Working with Taha was seamless. He understood our vision immediately and delivered ahead of schedule. The animations he added gave our brand the premium feel we were after.",
         author: "Michael Ross",
-        role: "Founder, Ross Creative Agency"
+        role: "Founder, Ross Creative Agency",
+        rating: 5
     },
     {
-        text: "I've worked with many developers, but Taha's attention to detail is unmatched. His knowledge of SEO and performance optimization really sets him apart.",
+        text: "I've worked with many developers, but Taha's attention to detail is unmatched. His knowledge of SEO and performance optimization really sets him apart from the rest.",
         author: "David Chen",
-        role: "Marketing Director, OmniCorp"
-    }
+        role: "Marketing Director, OmniCorp",
+        rating: 5
+    },
 ]
 
 export default function Testimonials() {
-    const container = useRef(null)
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.from(".testimonial-card", {
-                scrollTrigger: {
-                    trigger: container.current,
-                    start: "top 80%",
-                },
-                y: 40,
-                opacity: 0,
-                duration: 0.8,
-                stagger: 0.2,
-                ease: "power3.out"
-            })
-        }, container)
-
-        return () => ctx.revert()
-    }, [])
-
     return (
-        <Section id="testimonials" className="py-24 bg-navy-800/20">
-            <div ref={container} className="max-w-6xl mx-auto">
-                <div className="flex items-center gap-4 mb-16 justify-center">
-                    <span className="h-[1px] w-12 bg-green"></span>
-                    <span className="text-green font-mono text-lg">Testimonials</span>
-                    <span className="h-[1px] w-12 bg-green"></span>
-                </div>
+        <Section id="testimonials" accent="purple" dark>
+            <SectionHeader
+                label="Testimonials"
+                title="What Clients Say"
+                description="Feedback from people I've had the pleasure of working with."
+                center
+            />
 
-                <h2 className="text-3xl md:text-5xl font-bold text-slate-100 mb-20 text-center">
-                    Don&apos;t just take my word for it.
-                </h2>
+            <div className="grid md:grid-cols-3 gap-8">
+                {testimonials.map((item, i) => (
+                    <div
+                        key={i}
+                        className="glass p-8 rounded-2xl hover:bg-white/5 transition-all duration-300 relative group"
+                    >
+                        {/* Quote Icon */}
+                        <Quote className="absolute top-6 right-6 text-accent-purple/20" size={48} />
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {testimonials.map((item, index) => (
-                        <div
-                            key={index}
-                            className="testimonial-card p-8 bg-navy-700/50 backdrop-blur-sm rounded-xl border border-navy-600 relative"
-                        >
-                            <Quote className="absolute top-6 right-6 text-green/20" size={48} />
-                            <p className="text-slate-300 text-lg leading-relaxed mb-8 italic relative z-10">
-                                &quot;{item.text}&quot;
-                            </p>
+                        {/* Stars */}
+                        <div className="flex gap-1 mb-6">
+                            {[...Array(item.rating)].map((_, j) => (
+                                <Star key={j} size={18} className="fill-accent-purple text-accent-purple" />
+                            ))}
+                        </div>
+
+                        <p className="text-gray-300 text-lg leading-relaxed mb-8 italic relative z-10">
+                            "{item.text}"
+                        </p>
+
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent-purple to-accent-pink flex items-center justify-center text-white font-bold">
+                                {item.author.charAt(0)}
+                            </div>
                             <div>
-                                <h4 className="text-slate-100 font-bold text-lg">{item.author}</h4>
-                                <p className="text-green text-sm font-mono mt-1">{item.role}</p>
+                                <h4 className="text-white font-bold">{item.author}</h4>
+                                <p className="text-gray-400 text-sm">{item.role}</p>
                             </div>
                         </div>
-                    ))}
-                </div>
+                    </div>
+                ))}
             </div>
         </Section>
     )

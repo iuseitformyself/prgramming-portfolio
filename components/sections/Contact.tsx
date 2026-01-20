@@ -1,31 +1,64 @@
 'use client'
-import { Button } from '../ui/Button'
-import { Section } from '../ui/Section'
+import { Section, SectionHeader } from '../ui/Section'
+import { Mail, Phone, MapPin, Github, Linkedin, Twitter } from 'lucide-react'
+
+const contactInfo = [
+    { icon: <Mail size={28} />, label: "Email", value: "iuseitformyself@gmail.com", href: "mailto:iuseitformyself@gmail.com" },
+    { icon: <Phone size={28} />, label: "Phone", value: "03414993824", href: "tel:03414993824" },
+    { icon: <MapPin size={28} />, label: "Location", value: "Available Worldwide (Remote)", href: null },
+]
+
+const socials = [
+    { icon: <Github size={24} />, label: "GitHub", href: "https://github.com" },
+    { icon: <Linkedin size={24} />, label: "LinkedIn", href: "https://linkedin.com" },
+    { icon: <Twitter size={24} />, label: "Twitter", href: "https://twitter.com" },
+]
 
 export default function Contact() {
     return (
-        <Section id="contact" className="text-center justify-center min-h-[80vh]">
-            <div className="max-w-2xl mx-auto">
-                <p className="text-green font-mono text-lg mb-6">What&apos;s Next?</p>
-                <h2 className="text-4xl md:text-6xl font-bold text-slate-100 mb-8">
-                    Get In Touch
-                </h2>
-                <p className="text-slate-400 text-lg mb-12 leading-relaxed">
-                    I&apos;m currently looking for new opportunities, my inbox is always open.
-                    Whether you have a question or just want to say hi, I&apos;ll try my best to get back to you!
-                </p>
-                <div className="flex flex-col items-center gap-6">
-                    <Button size="lg" onClick={() => window.location.href = 'mailto:iuseitformyself@gmail.com'}>
-                        Say Hello
-                    </Button>
-                    <a href="mailto:iuseitformyself@gmail.com" className="text-sm font-mono text-green hover:underline underline-offset-4">
-                        iuseitformyself@gmail.com
-                    </a>
+        <Section id="contact" accent="cyan" dark>
+            <div className="max-w-3xl mx-auto text-center">
+                <SectionHeader
+                    label="Contact"
+                    title="Let's Work Together"
+                    description="Have a project in mind? I'd love to hear about it. Reach out and let's create something amazing."
+                    center
+                />
+
+                {/* Contact Info Cards */}
+                <div className="grid md:grid-cols-3 gap-6 mb-12">
+                    {contactInfo.map((item, i) => (
+                        <div key={i} className="glass p-6 rounded-2xl hover:bg-white/5 transition-colors group">
+                            <div className="w-14 h-14 mx-auto rounded-xl bg-accent-cyan/10 flex items-center justify-center text-accent-cyan mb-4 group-hover:bg-accent-cyan group-hover:text-carbon transition-colors">
+                                {item.icon}
+                            </div>
+                            <p className="text-gray-400 text-sm mb-1">{item.label}</p>
+                            {item.href ? (
+                                <a href={item.href} className="text-white font-semibold text-lg hover:text-accent-cyan transition-colors">
+                                    {item.value}
+                                </a>
+                            ) : (
+                                <p className="text-white font-semibold">{item.value}</p>
+                            )}
+                        </div>
+                    ))}
                 </div>
 
-                <footer className="mt-32 text-slate-500 font-mono text-sm">
-                    <p>Designed & Built by Muhammad Taha</p>
-                </footer>
+                {/* Socials */}
+                <div className="flex justify-center gap-4">
+                    {socials.map((social, i) => (
+                        <a
+                            key={i}
+                            href={social.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-14 h-14 rounded-xl glass flex items-center justify-center text-gray-400 hover:text-accent-cyan hover:bg-accent-cyan/10 transition-colors"
+                            aria-label={social.label}
+                        >
+                            {social.icon}
+                        </a>
+                    ))}
+                </div>
             </div>
         </Section>
     )

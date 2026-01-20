@@ -1,88 +1,69 @@
 'use client'
-import { useEffect, useRef } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Section } from '../ui/Section'
-
-gsap.registerPlugin(ScrollTrigger)
+import { Section, SectionHeader } from '../ui/Section'
+import { MessageSquare, Lightbulb, Code, Rocket } from 'lucide-react'
 
 const steps = [
     {
         number: "01",
+        icon: <MessageSquare size={28} />,
         title: "Discovery",
-        desc: "We start by understanding your goals, target audience, and requirements. I ask the right questions to ensure we're solving the right problems."
+        description: "We start with a conversation. I learn about your business, goals, and vision to understand exactly what you need."
     },
     {
         number: "02",
-        title: "Strategy & Design",
-        desc: "Planning the architecture, tech stack, and user experience. This phase ensures a solid foundation before a single line of code is written."
+        icon: <Lightbulb size={28} />,
+        title: "Planning",
+        description: "I create a detailed roadmap including wireframes, tech stack decisions, and timeline estimates."
     },
     {
         number: "03",
+        icon: <Code size={28} />,
         title: "Development",
-        desc: "Building the application using modern best practices. I focus on clean code, performance, and accessibility throughout this phase."
+        description: "The building phase. I write clean, maintainable code with regular updates and feedback loops."
     },
     {
         number: "04",
-        title: "Review & Launch",
-        desc: "Rigorous testing and refinement. Once everything is perfect, we launch your product to the world and ensure smooth operation."
-    }
+        icon: <Rocket size={28} />,
+        title: "Launch & Support",
+        description: "After thorough testing, we launch. I provide ongoing support to ensure everything runs smoothly."
+    },
 ]
 
 export default function Process() {
-    const container = useRef(null)
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.from(".process-step", {
-                scrollTrigger: {
-                    trigger: container.current,
-                    start: "top 70%",
-                },
-                x: -50,
-                opacity: 0,
-                duration: 0.8,
-                stagger: 0.2,
-                ease: "power2.out"
-            })
-        }, container)
-
-        return () => ctx.revert()
-    }, [])
-
     return (
-        <Section id="process" className="py-24 bg-navy-800/20">
-            <div ref={container}>
-                <div className="flex flex-col md:flex-row gap-16">
-                    <div className="md:w-1/3">
-                        <div className="sticky top-32">
-                            <div className="flex items-center gap-4 mb-8">
-                                <span className="h-[1px] w-12 bg-green"></span>
-                                <span className="text-green font-mono text-lg">My Process</span>
-                            </div>
-                            <h2 className="text-3xl md:text-5xl font-bold text-slate-100 mb-6 leading-tight">
-                                How I bring ideas to life.
-                            </h2>
-                            <p className="text-slate-400 text-lg leading-relaxed">
-                                A structured workflow designed for clarity, efficiency, and exceptional results.
-                            </p>
-                        </div>
-                    </div>
+        <Section id="process" accent="yellow">
+            <SectionHeader
+                label="How I Work"
+                title="My Process"
+                description="A structured approach to deliver quality results on time."
+                center
+            />
 
-                    <div className="md:w-2/3 flex flex-col gap-12">
-                        {steps.map((step, index) => (
-                            <div key={index} className="process-step flex gap-6 md:gap-10 group cursor-default">
-                                <div className="font-mono text-4xl md:text-5xl font-bold text-navy-700 group-hover:text-green transition-colors duration-300 mt-2">
-                                    {step.number}
-                                </div>
-                                <div className="border-l border-navy-700 pl-8 md:pl-12 py-2 group-hover:border-green/30 transition-colors duration-300">
-                                    <h3 className="text-2xl text-slate-100 font-bold mb-4">{step.title}</h3>
-                                    <p className="text-slate-400 leading-relaxed max-w-lg">{step.desc}</p>
-                                </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {steps.map((step, i) => (
+                    <div
+                        key={i}
+                        className="relative glass p-8 rounded-2xl hover:bg-white/5 transition-all duration-300 group"
+                    >
+                        {/* Number */}
+                        <div className="absolute top-6 right-6 text-6xl font-black text-white/5 group-hover:text-accent-yellow/10 transition-colors">
+                            {step.number}
+                        </div>
+
+                        <div className="relative z-10">
+                            <div className="w-14 h-14 rounded-xl bg-accent-yellow/10 flex items-center justify-center text-accent-yellow mb-6 group-hover:bg-accent-yellow group-hover:text-carbon transition-colors">
+                                {step.icon}
                             </div>
-                        ))}
+                            <h3 className="text-white text-xl font-bold mb-4">{step.title}</h3>
+                            <p className="text-gray-400 leading-relaxed">{step.description}</p>
+                        </div>
+
+                        {/* Connector Arrow (except last) */}
+                        {i < steps.length - 1 && (
+                            <div className="hidden lg:block absolute top-1/2 -right-4 w-8 h-px bg-gradient-to-r from-accent-yellow/50 to-transparent" />
+                        )}
                     </div>
-                </div>
+                ))}
             </div>
         </Section>
     )
